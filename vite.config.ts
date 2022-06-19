@@ -6,5 +6,8 @@ export default defineConfig({
   build: {
     target: 'esnext',
     polyfillDynamicImport: false,
+    rollupOptions:{
+      external:["node_modules/todomvc-app-css/index.css"]
+    }
   },
 });
