@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import { NavLink } from "solid-app-router";
 
 const App: Component = () => {
   return (
@@ -37,15 +38,19 @@ const App: Component = () => {
         </span>
         <ul class="filters">
           <li>
-            <a href="#/" class="selected">
+            <NavLink href="/" end activeClass="selected">
               All
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#/active">Active</a>
+            <NavLink href="/active" end activeClass="selected">
+              Active
+            </NavLink>
           </li>
           <li>
-            <a href="#/completed">Completed</a>
+            <NavLink href="/completed" end activeClass="selected">
+              Completed
+            </NavLink>
           </li>
         </ul>
         <button class="clear-completed" style="display: block;">
