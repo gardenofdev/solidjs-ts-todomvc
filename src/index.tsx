@@ -3,7 +3,7 @@ import { render } from "solid-js/web";
 import { Router, hashIntegration } from "solid-app-router";
 
 import "todomvc-app-css/index.css";
-import App from "./App";
+import App from "./App/index";
 
 render(
   () => (
