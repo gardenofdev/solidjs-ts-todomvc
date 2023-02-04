@@ -5,23 +5,22 @@ import type { Store, SetStoreFunction } from "solid-js/store"
 const LOCAL_STORAGE_KEY = "todos-solid";
 
 export interface TodoItem {
-    id: number;
+    id: string;
     text: string;
     completed: boolean
 }
 
-export interface State {
-    todos: TodoItem[]
-}
+export type State = TodoItem[]
 
-export function getLocalStore(value: TodoItem[] = [])
+
+function createLocalStore(value: TodoItem[] = [])
     : [get: Store<State>, set: SetStoreFunction<State>] {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
 
-    const [state, setState] = createStore<State>(
+    const [state, setState] = createStore<TodoItem[]>(
         stored ?
             JSON.parse(stored)
-            : { todos: value }
+            : value
     )
 
     createEffect(() => {
@@ -29,3 +28,6 @@ export function getLocalStore(value: TodoItem[] = [])
     })
     return [state, setState]
 }
+
+
+export const [todos, setTodos] = createLocalStore()
