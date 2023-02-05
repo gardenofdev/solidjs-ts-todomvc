@@ -1,8 +1,10 @@
 import type { Component } from "solid-js";
-
-import { removeTodo, TodoItem } from "../../../todo";
+import { todos, setTodos, TodoItem } from "../../../todo";
 
 const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
+  const removeTodo = (todoId: string) =>
+    setTodos(todos.filter((item) => item.id !== todoId));
+
   return (
     <li classList={{ completed: todo.completed }}>
       <div class="view">

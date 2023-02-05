@@ -12,7 +12,6 @@ export interface TodoItem {
 
 export type State = TodoItem[]
 
-
 function createLocalStore(value: TodoItem[] = [])
     : [get: Store<State>, set: SetStoreFunction<State>] {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -29,9 +28,4 @@ function createLocalStore(value: TodoItem[] = [])
     return [state, setState]
 }
 
-
 export const [todos, setTodos] = createLocalStore()
-
-export const removeTodo = (todoId: string) => setTodos(todos.filter(item => item.id !== todoId))
-
-export const count = createMemo(() => todos.length)
