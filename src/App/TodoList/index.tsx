@@ -1,6 +1,6 @@
 import { useLocation } from "solid-app-router";
 import { Component, createMemo, For } from "solid-js";
-import { TodoItem, todos } from "../../todo";
+import { TodoItem, state } from "../../todo";
 
 import Item from "./Item";
 
@@ -24,7 +24,9 @@ const TodoList: Component = () => {
       <input id="toggle-all" class="toggle-all" type="checkbox" />
       <label for="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
-        <For each={filterTodos(todos)}>{(todo) => <Item todo={todo} />}</For>
+        <For each={filterTodos(state.todos)}>
+          {(todo) => <Item todo={todo} />}
+        </For>
       </ul>
     </section>
   );

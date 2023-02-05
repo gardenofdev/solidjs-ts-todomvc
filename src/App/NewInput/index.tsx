@@ -1,17 +1,19 @@
 import { Component, createSignal } from "solid-js";
 
-import { setTodos } from "../../todo";
+import { setState } from "../../todo";
 import { UUID } from "../../utils";
 
 const NewInput: Component = () => {
-  const [newText, setNewText] = createSignal("");
-
   const onKeyDown = (e: KeyboardEvent) => {
+    const target = e.target as HTMLInputElement;
+
     if (e.code === "Enter") {
-      setTodos((prev) => [
+      setState("todos", (prev) => [
         ...prev,
-        { id: UUID(), text: newText(), completed: false },
+        { id: UUID(), text: target.value.trim(), completed: false },
       ]);
+
+      target.value = "";
     }
   };
 
@@ -22,8 +24,6 @@ const NewInput: Component = () => {
         class="new-todo"
         placeholder="What needs to be done?"
         autofocus
-        value={newText()}
-        onInput={(e) => setNewText(e.currentTarget.value)}
         onkeydown={onKeyDown}
       />
     </header>

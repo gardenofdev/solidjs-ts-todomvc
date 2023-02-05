@@ -10,13 +10,15 @@ export interface TodoItem {
     completed: boolean
 }
 
-export type State = TodoItem[]
+export type State = {
+    todos: TodoItem[]
+}
 
-function createLocalStore(value: TodoItem[] = [])
+function createLocalStore(value: State)
     : [get: Store<State>, set: SetStoreFunction<State>] {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
 
-    const [state, setState] = createStore<TodoItem[]>(
+    const [state, setState] = createStore<State>(
         stored ?
             JSON.parse(stored)
             : value
@@ -28,4 +30,4 @@ function createLocalStore(value: TodoItem[] = [])
     return [state, setState]
 }
 
-export const [todos, setTodos] = createLocalStore()
+export const [state, setState] = createLocalStore({ todos: [] })

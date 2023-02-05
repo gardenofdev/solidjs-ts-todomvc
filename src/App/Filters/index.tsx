@@ -1,11 +1,11 @@
 import type { Component } from "solid-js";
 
 import { NavLink } from "solid-app-router";
-import { todos } from "../../todo";
+import { state } from "../../todo";
 
 const Filters: Component = () => {
   const remainCount = () => {
-    return todos.filter((t) => !t.completed).length;
+    return state.todos.filter((t) => !t.completed).length;
   };
 
   return (
