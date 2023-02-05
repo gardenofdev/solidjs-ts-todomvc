@@ -1,4 +1,4 @@
-import { createEffect } from "solid-js";
+import { createEffect, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Store, SetStoreFunction } from "solid-js/store"
 
@@ -31,3 +31,7 @@ function createLocalStore(value: TodoItem[] = [])
 
 
 export const [todos, setTodos] = createLocalStore()
+
+export const removeTodo = (todoId: string) => setTodos(todos.filter(item => item.id !== todoId))
+
+export const count = createMemo(() => todos.length)

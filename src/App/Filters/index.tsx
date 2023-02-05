@@ -1,12 +1,13 @@
 import type { Component } from "solid-js";
 
 import { NavLink } from "solid-app-router";
+import { count } from "../../todo";
 
 const Filters: Component = () => {
   return (
     <footer class="footer" style="display: block;">
       <span class="todo-count">
-        <strong>1</strong> item left
+        <strong>{count}</strong> items left
       </span>
       <ul class="filters">
         <li>

@@ -1,5 +1,6 @@
 import type { Component } from "solid-js";
-import { getLocalStore, TodoItem } from "../../../todo";
+
+import { removeTodo, TodoItem } from "../../../todo";
 
 const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
   return (
@@ -7,7 +8,7 @@ const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
       <div class="view">
         <input class="toggle" type="checkbox" checked={todo.completed} />
         <label>{todo.text}</label>
-        <button class="destroy"></button>
+        <button class="destroy" onClick={[removeTodo, todo.id]}></button>
       </div>
     </li>
   );
