@@ -1,11 +1,18 @@
 import type { Component } from "solid-js";
 
 import { NavLink } from "solid-app-router";
-import { state } from "../../todo";
+import { setState, state } from "../../todo";
 
 const Filters: Component = () => {
   const remainCount = () => {
     return state.todos.filter((t) => !t.completed).length;
+  };
+
+  const clearCompleted = () => {
+    setState(
+      "todos",
+      state.todos.filter((item) => !item.completed)
+    );
   };
 
   return (
@@ -30,7 +37,11 @@ const Filters: Component = () => {
           </NavLink>
         </li>
       </ul>
-      <button class="clear-completed" style="display: block;">
+      <button
+        class="clear-completed"
+        style="display: block;"
+        onClick={clearCompleted}
+      >
         Clear completed
       </button>
     </footer>
