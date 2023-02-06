@@ -12,6 +12,7 @@ export interface TodoItem {
 
 export type State = {
     todos: TodoItem[]
+    editingId: string
 }
 
 function createLocalStore(value: State)
@@ -30,4 +31,4 @@ function createLocalStore(value: State)
     return [state, setState]
 }
 
-export const [state, setState] = createLocalStore({ todos: [] })
+export const [state, setState] = createLocalStore({ todos: [], editingId: "" })

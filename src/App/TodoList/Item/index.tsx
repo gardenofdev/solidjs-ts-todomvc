@@ -1,7 +1,19 @@
-import type { Component } from "solid-js";
+import { Component, Show } from "solid-js";
 import { state, setState, TodoItem } from "../../../todo";
 
+declare module "solid-js" {
+  namespace JSX {
+    interface Directives {
+      setFocus: boolean;
+    }
+  }
+}
+
 const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
+  const setFocus = (el: HTMLInputElement) => {
+    setTimeout(() => el.focus(), 0);
+  };
+
   const removeTodo = (todoId: string) =>
     setState("todos", (t) => t.filter((item) => item.id !== todoId));
 
@@ -14,8 +26,30 @@ const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
     );
   };
 
+  const setEditing = (id: string = "") => {
+    setState("editingId", id);
+  };
+
+  const save = (id: string, event: Event) => {
+    const target = event.target as HTMLInputElement;
+    setState("todos", (item) => item.id === id, "text", target.value);
+
+    setEditing();
+  };
+
+  const doneEditing = (id: string, event: Event) => {
+    if ((event as KeyboardEvent).code === "Enter") {
+      save(id, event);
+    }
+  };
+
   return (
-    <li classList={{ completed: todo.completed }}>
+    <li
+      classList={{
+        completed: todo.completed,
+        editing: state.editingId === todo.id,
+      }}
+    >
       <div class="view">
         <input
           class="toggle"
@@ -23,9 +57,18 @@ const Item: Component<{ todo: TodoItem }> = ({ todo }) => {
           checked={todo.completed}
           onInput={[toggle, todo.id]}
         />
-        <label>{todo.text}</label>
+        <label onDblClick={[setEditing, todo.id]}>{todo.text}</label>
         <button class="destroy" onClick={[removeTodo, todo.id]}></button>
       </div>
+      <Show when={state.editingId === todo.id}>
+        <input
+          class="edit"
+          value={todo.text}
+          onFocusOut={[save, todo.id]}
+          onKeyDown={[doneEditing, todo.id]}
+          use:setFocus
+        />
+      </Show>
     </li>
   );
 };
